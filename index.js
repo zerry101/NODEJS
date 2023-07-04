@@ -1,4 +1,4 @@
-import {name,name1,name2} from "./features.js";
+import * as features from "./features.js";
 import  http from "http";
 // const name=require("./features");
 // const http = require("http");
@@ -9,7 +9,7 @@ console.log(http);
 const server = http.createServer((req, res) => {
     
     if (req.url === "/about") {
-        res.end("<h1>About Page</h1>");
+        res.end(`<h1>${features.randNumber()}</h1>`);
     }
     else if (req.url === "/home") { 
         res.end("<h1>Home Page</h1>");
@@ -18,9 +18,10 @@ const server = http.createServer((req, res) => {
         res.end("<h1>Page Not Found </h1>");
     }
     
-    console.log(name);
-    console.log(name1);
-    console.log(name2);
+    console.log(features.name);
+    console.log(features.name1);
+    console.log(features.name2);
+    console.log(features.randNumber());
     console.log(req.url);
     console.log("Servered");
 });
