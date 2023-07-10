@@ -10,7 +10,7 @@ const server = http.createServer((req, res) => {
 
     if (req.url === "/about") {
         res.end(`<h1>${features.randNumber()}</h1>`);
-
+        res.render()
         
     }   
     else if (req.url === "/home") {
