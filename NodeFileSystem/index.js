@@ -14,7 +14,7 @@ fs.readdir(dirpath, (err, files) => {
     console.log(files);
     files.forEach((item) => {
         console.log(item);
-      readFile(`${dirpath}/${item}`).then((data)=>{
+      readFile(`${dirpath}/${item}`,'utf-8').then((data)=>{
         console.log(data);
       });  
     })
