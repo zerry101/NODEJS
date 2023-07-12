@@ -16,6 +16,6 @@ fs.readdir(dirpath, (err, files) => {
         console.log(item);
       readFile(`${dirpath}/${item}`,'utf-8').then((data)=>{
         console.log(data);
-      });  
+      });   
     })
 })
