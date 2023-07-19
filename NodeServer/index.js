@@ -2,8 +2,9 @@ const http=require('http');
 
 function dataControl(req,res){
     res.write("hello srgdgfggfgf");
-    res.end("");
-     
+    res.send("HELLO");
+    res.end("Hiii");
+
 };
 
 http.createServer(dataControl).listen(5000,()=>{
