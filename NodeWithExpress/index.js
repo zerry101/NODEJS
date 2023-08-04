@@ -27,9 +27,15 @@ const app=express();
         const user={
             name:"raj",
             age:30,
-            city:"ahmedabad"
+            city:"ahmedabad",
+            skills:["java","python"]
+
         }
         res.render("profile",{user});       
+    })
+
+    app.get('/login',(_,res)=>{
+        res.render("login");
     })
 
 

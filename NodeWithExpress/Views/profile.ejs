@@ -19,6 +19,9 @@
                 <h1><%= user.name %></h1>
                 <h1><%= user.age %></h1>
                 <h1><%= user.city %></h1>
+                 <% user.skills.forEach((item)=>{ %> 
+                <li><%= item %></li>
+                <% }) %>
             </div>
             <buttton type="submit"></buttton>
         </form>
