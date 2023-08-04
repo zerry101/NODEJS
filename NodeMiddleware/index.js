@@ -15,11 +15,15 @@ const reqFilter=(req,res,next)=>{
 }
 
 // app.use(reqFilter);
+// Application level middleware above
 
 app.get('/',(req,res)=>{
     res.send('welcome this is home page');
 
 })
+
+// route  level middleware below
+
 app.get('/about',reqFilter,(req,res)=>{
     res.send('welcome this is about page');
 
