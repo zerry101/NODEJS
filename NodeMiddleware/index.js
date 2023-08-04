@@ -1,38 +1,30 @@
 const express=require('express');
 const app=express();
-
-
-const reqFilter=(req,res,next)=>{
-    if(req.query.age<=10){
-        res.send("you are under age");
-    }
-    else if(!req.query.age){
-        res.send("please provide age");
-    }
-    else{
-        next();
-    }
-}
+const reqFilter=require('./middleware');
+const route=express.Router();
 
 // app.use(reqFilter);
-// Application level middleware above
+// Application level middleware above middleware that applies globally
+
 
 app.get('/',(req,res)=>{
     res.send('welcome this is home page');
 
 })
 
-// route  level middleware below
+route.use(reqFilter);
 
-app.get('/about',reqFilter,(req,res)=>{
+// route  level middleware below 
+route.get('/about',reqFilter,(req,res)=>{
     res.send('welcome this is about page');
 
 })
-app.get('/contactus',(req,res)=>{
+route.get('/contactus',(req,res)=>{
     res.send('welcome this is constactus page');
 
 })
 
+app.use('/',route)
 
 app.listen('5000',()=>{
 
