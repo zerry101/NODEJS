@@ -23,8 +23,13 @@ const app=express();
 
     app.set("view engine","ejs");
 
-    app.get((req,res)=>{
-        res.render("index",{name:"Abhishek"});       
+    app.get('',(_,res)=>{
+        const user={
+            name:"raj",
+            age:30,
+            city:"ahmedabad"
+        }
+        res.render("profile",{user});       
     })
 
 
