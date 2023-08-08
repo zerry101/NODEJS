@@ -1,5 +1,6 @@
 const express=require('express');
 const dbcConnect= require('./mongodb');
+const mongodb=require('mongodb');
 
 const app=express();
 
@@ -32,6 +33,17 @@ app.put('/:name',async(req,res)=>{
     res.send(updateResult);
 })
 
+app.delete('/:id',async(req,res)=>{
+    const db=await dbcConnect();
+    console.log(req.params.id);
+    deleteResult=await db.deleteOne({_id:new mongodb.ObjectId(req.params.id)})
+
+    res.send(deleteResult);
+})
+
 app.listen(5000,()=>{
     console.log('listeining on port 5000');
 })
+
+
+

@@ -4,7 +4,7 @@ const getData=require('./mongodb');
 const deleteRecord=async()=>{
 
     const db=await getData();
-    const result=await db.deleteMany({
+    const result=await db.deleteOne({
         name:'note 5'
     });
 
