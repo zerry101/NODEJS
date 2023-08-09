@@ -20,18 +20,37 @@
 
 const express = require('express');
 require('./config');
+const Product = require('./product');
 const product = require('./product');
+const ObjectId = require('mongoose/lib/types/objectid');
 
 const app=express();
 
 app.use(express.json());  
 
-app.post("/create",(req,res)=>{
+
+app.post("/create",async(req,res)=>{
   console.log(req.body);
-  
-  res.send("Done");
+
+  let data = new Product(req.body);
+  let result= await data.save();
+  res.send(result);
 
 });
+
+app.get('/list',async(req,res)=>{
+const data=await Product.find();
+
+res.send(data);
+})
+
+app.delete('/delete/:id',async(req,res)=>{
+  console.log(req.params);
+const data=await Product.deleteOne(new ObjectId(req.params));
+  res.send(data);
+})
+
+
 
 app.listen(5000);
 
