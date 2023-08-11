@@ -17,41 +17,62 @@
 
 // main();
 
+const express = require("express");
+require("./config");
+const Product = require("./product");
+const product = require("./product");
+const ObjectId = require("mongoose/lib/types/objectid");
 
-const express = require('express');
-require('./config');
-const Product = require('./product');
-const product = require('./product');
-const ObjectId = require('mongoose/lib/types/objectid');
+const app = express();
 
-const app=express();
+app.use(express.json());
 
-app.use(express.json());  
-
-
-app.post("/create",async(req,res)=>{
+app.post("/create", async (req, res) => {
   console.log(req.body);
 
   let data = new Product(req.body);
-  let result= await data.save();
+  let result = await data.save();
   res.send(result);
-
 });
 
-app.get('/list',async(req,res)=>{
-const data=await Product.find();
+app.get("/list", async (req, res) => {
+  const data = await Product.find();
 
-res.send(data);
-})
-
-app.delete('/delete/:id',async(req,res)=>{
-  console.log(req.params);
-const data=await Product.deleteOne(new ObjectId(req.params));
   res.send(data);
-})
+});
 
+app.delete("/delete/:id", async (req, res) => {
+  console.log(req.params);
+  const data = await Product.deleteOne(new ObjectId(req.params));
+  res.send(data);
+});
 
+app.put("/update/:_id", async (req, res) => {
+  console.log(req.params);
+  const data = await Product.updateOne(req.params, {
+    $set: req.body,
+  });
+  res.send(data);
+});
 
+app.get("/find/:key", async (req, res) => {
+
+  const keyword = req.params.key;
+  const numericKeyword=isNaN(keyword)?keyword:Number(keyword);
+  
+  const data = await Product.find({
+    $or: [
+      { "name": { $regex: keyword } },
+      { "brand": { $regex: keyword } },
+      { "category": { $regex: keyword } },
+      { "price": numericKeyword  }
+
+    ],
+  });
+
+  console.log(data);
+  
+  res.send(data);
+  // res.send(data);
+});
 app.listen(5000);
-
-
