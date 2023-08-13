@@ -21,16 +21,34 @@ const express = require("express");
 require("./config");
 const Product = require("./product");
 const product = require("./product");
+const upload = require("./upload");
+const path = require("path");
+
+const EventEmitter = require("events");
+const event = new EventEmitter();
 const ObjectId = require("mongoose/lib/types/objectid");
 
 const app = express();
 
 app.use(express.json());
 
+let count = 0;
+
+event.on("count API", () => {
+  count++;
+  console.log("event called", count);
+});
+
+app.get("/", (req, res) => {
+  console.log("api called");
+  res.send("api called");
+  event.emit("count API");
+});
+
 app.post("/create", async (req, res) => {
   console.log(req.body);
-
   let data = new Product(req.body);
+
   let result = await data.save();
   res.send(result);
 });
@@ -56,23 +74,40 @@ app.put("/update/:_id", async (req, res) => {
 });
 
 app.get("/find/:key", async (req, res) => {
-
   const keyword = req.params.key;
-  const numericKeyword=isNaN(keyword)?keyword:Number(keyword);
-  
+  const numericKeyword = isNaN(keyword) ? keyword : Number(keyword);
+
   const data = await Product.find({
     $or: [
-      { "name": { $regex: keyword } },
-      { "brand": { $regex: keyword } },
-      { "category": { $regex: keyword } },
-      { "price": numericKeyword  }
-
+      { name: { $regex: keyword } },
+      { brand: { $regex: keyword } },
+      { category: { $regex: keyword } },
+      { price: numericKeyword },
     ],
   });
 
   console.log(data);
-  
+
   res.send(data);
   // res.send(data);
 });
-app.listen(5000);
+
+app.post("/upload", upload.single("file"), (req, res) => {
+  res.status(200).send("File has been uploaded successfully");
+});
+
+app.get("/getImage", (req, res) => {
+  // const path = __dirname;
+  console.log(path);
+  const filePath = path.join(
+    __dirname,
+    "/uploads/1691819705406-Screenshot (1).png"
+  );
+  res.sendFile(filePath);
+});
+
+app.listen(3000, () => {
+  console.log("listening on port 3000");
+});
+
+// app.listen(5000);
