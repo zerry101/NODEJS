@@ -20,7 +20,7 @@
 const express = require("express");
 require("./config");
 const Product = require("./product");
-const product = require("./product");
+// const product = require("./product");
 const upload = require("./upload");
 const path = require("path");
 
