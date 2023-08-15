@@ -20,7 +20,7 @@ app.post("/create", async (req, res) => {
   try {
     await data.validate();
     const result = await data.save();
-    res.status(201).json(result); // Respond with 201 Created status and saved data
+    res.status(201).json(result);
   } catch (error) {
     if (error.name == "ValidationError") {
       res.status(400).send(error.message);
@@ -32,22 +32,16 @@ app.post("/create", async (req, res) => {
 });
 
 app.put("/update/:_id", async (req, res) => {
-  // const updateId = req.params._id;
-  // console.log(updateId);
-  // res.send(updateId);
-
   const data = new customerInfo(req.body);
   try {
     await data.validate();
     const result = await customerInfo.updateOne(req.params, {
       $set: req.body,
     });
-    res
-      .status(201)
-      .json({
-        message: "The requested record has been updated",
-        updatedData: result,
-      });
+    res.status(201).json({
+      message: "The requested record has been updated",
+      updatedData: result,
+    });
   } catch (error) {
     if (error.name == "ValidationError") {
       res.status(400).send(error.message);
@@ -56,5 +50,10 @@ app.put("/update/:_id", async (req, res) => {
       res.status(500).send("Internal Server Error");
     }
   }
-  // res.send(data);
+});
+
+app.delete("/delet/:_id", async (req, res) => {
+  const customerid = new ObjectId(req.params._id);
+
+  console.log(customerid);
 });
