@@ -54,6 +54,4 @@ app.put("/update/:_id", async (req, res) => {
 
 app.delete("/delet/:_id", async (req, res) => {
   const customerid = new ObjectId(req.params._id);
-
-  console.log(customerid);
 });
