@@ -53,8 +53,46 @@ const app = express();
 const mongoose = require("mongoose");
 const config = require("./config/config");
 const routes = require("./routes");
+const customerInfo = require("./models/customerInfoSchemaModel");
 
 app.use(express.json());
+
+app.get("/search", async (req, res) => {
+  const PAGE_SIZE = 10;
+  const currentPage = req.query.page || 1;
+  const searchTerm = req.query.search || "";
+  console.log(parseInt(currentPage));
+  // res.json({ currentPage, searchTerm });
+  console.log(searchTerm);
+
+  try {
+    const totalCount = await customerInfo
+      .countDocuments({
+        name: { $regex: searchTerm, $options: "i" },
+      })
+      .skip((currentPage - 1) * 10)
+      .limit(10);
+
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+    const data = await customerInfo
+      .find({
+        name: { $regex: searchTerm, $options: "i" },
+      })
+      .skip((currentPage - 1) * PAGE_SIZE)
+      .limit(PAGE_SIZE);
+
+    res.status(200).json({
+      currentPage,
+      totalPages,
+      data,
+    });
+
+    console.log(totalCount);
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 app.listen(3000, () => {
   console.log("Listening on port 3000");
