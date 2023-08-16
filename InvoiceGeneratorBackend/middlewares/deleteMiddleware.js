@@ -1,18 +1,11 @@
+const { ObjectId } = require("mongodb");
 const customerInfo = require("../models/customerInfoSchemaModel");
 
-const updateMiddleWare = async (req, res, next) => {
-  try {
-    const data = new customerInfo(req.body);
-    await data.validate();
-
-    req.req.data = data;
-    next();
-  } catch (error) {
-    if (error.name == "ValidationError") {
-      res.status(400).send(error.message);
-    } else {
-      console.error(" Server Error", error);
-      res.status(500).send("Internal Server Error");
-    }
-  }
+const deleteMiddleware = async (req, res, next) => {
+  const objectid = new ObjectId(req.params._id);
+  req.customerid = objectid;
+  console.log("midw", objectid);
+  next();
 };
+
+module.exports = deleteMiddleware;

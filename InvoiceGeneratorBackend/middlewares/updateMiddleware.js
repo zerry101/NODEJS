@@ -5,7 +5,7 @@ const updateMiddleWare = async (req, res, next) => {
     const data = new customerInfo(req.body);
     await data.validate();
 
-    req.data = data;
+    req.data = req.body;
     next();
   } catch (error) {
     if (error.name == "ValidationError") {

@@ -15,3 +15,5 @@ const createMiddleware = async (req, res, next) => {
     }
   }
 };
+
+module.exports = createMiddleware;
