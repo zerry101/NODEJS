@@ -7,7 +7,7 @@ const customerDataSchema = new mongoose.Schema(
     name: { type: String, required: true },
     address: { type: String, required: true },
     contactno: { type: String, required: true },
-    GSTNO: { type: String, required: true },
+    // GSTNO: { type: String, required: true },
     transportationmode: { type: String, required: true },
     vehiclenumber: { type: String, required: true },
     dateofsupply: { type: Object, required: true },

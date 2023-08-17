@@ -2,7 +2,7 @@ const customerInfo = require("../models/customerInfoSchemaModel");
 
 const searchData = async (req, res) => {
   const PAGE_SIZE = 10;
-  const currentPage = req.query.page || 1;
+  const currentPage = req.query.pageNumber || 1;
   const searchTerm = req.query.search || "";
   console.log(parseInt(currentPage));
   // res.json({ currentPage, searchTerm });
@@ -42,7 +42,7 @@ const searchData = async (req, res) => {
         // $or: [
         // ],
       })
-      .sort({ date: -1 })
+      .sort({ dateofsupply: -1 })
       .skip((currentPage - 1) * PAGE_SIZE)
       .limit(PAGE_SIZE);
 

@@ -13,6 +13,15 @@ const deleteMiddleware = require("../middlewares/deleteMiddleware");
 // const createController = require("../controllers/createController");
 // const updateController = require("../controllers/updateController");
 
+router.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 router.post("/create", createMiddleware, createCustomer);
 router.put("/update/:_id", updateMiddleware, updateCustomer);
 router.delete("/delete/:_id", deleteMiddleware, deleteCustomer);

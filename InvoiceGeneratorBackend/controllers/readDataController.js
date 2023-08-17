@@ -1,8 +1,9 @@
 const customerInfo = require("../models/customerInfoSchemaModel");
 
 const readData = async (req, res) => {
-  const PAGE_SIZE = 10;
-  const currntPage = req.query.page || 1;
+  // const PAGE_SIZE = 10;
+  const currntPage = req.query.pageNumber || 1;
+  const PAGE_SIZE = req.query.pageSize || 10;
 
   const totalCount = await customerInfo.countDocuments();
 
