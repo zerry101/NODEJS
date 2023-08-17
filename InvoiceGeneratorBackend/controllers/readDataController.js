@@ -10,7 +10,7 @@ const readData = async (req, res) => {
   const data = await customerInfo
     .find()
     .limit(PAGE_SIZE)
-    .sort({ data: -1 })
+    .sort({ dateofsupply: -1 })
     .skip(PAGE_SIZE * (currntPage - 1));
 
   console.log(totalCount);

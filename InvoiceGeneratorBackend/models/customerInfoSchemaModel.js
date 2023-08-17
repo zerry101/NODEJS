@@ -10,7 +10,7 @@ const customerDataSchema = new mongoose.Schema(
     // GSTNO: { type: String, required: true },
     transportationmode: { type: String, required: true },
     vehiclenumber: { type: String, required: true },
-    dateofsupply: { type: Object, required: true },
+    dateofsupply: { type: String, required: true },
     placeofsupply: { type: String, required: true },
     shippedto: { type: String, required: true },
     productData: { type: String, required: true },
