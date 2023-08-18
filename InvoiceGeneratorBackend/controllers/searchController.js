@@ -12,6 +12,7 @@ const searchData = async (req, res) => {
     const totalCount = await customerInfo
       .countDocuments({
         $or: [
+          { _id: { $regex: searchTerm, $options: "i" } },
           { name: { $regex: searchTerm, $options: "i" } },
           { address: { $regex: searchTerm, $options: "i" } },
           { transportationmode: { $regex: searchTerm, $options: "i" } },

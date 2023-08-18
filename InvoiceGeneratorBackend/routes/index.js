@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const cors = require("cors");
 
 const createCustomer = require("../controllers/createController");
 const updateCustomer = require("../controllers/updateController");
@@ -21,6 +22,8 @@ router.use(function (req, res, next) {
   );
   next();
 });
+
+router.use(cors());
 
 router.post("/create", createMiddleware, createCustomer);
 router.put("/update/:_id", updateMiddleware, updateCustomer);
